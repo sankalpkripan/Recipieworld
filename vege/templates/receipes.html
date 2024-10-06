@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+{%  block start %}
+    <div class="container mt-5">
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2
+            >Add Receipe
+            </h2>
+            <hr>
+            <div class="mb-3mt-1">
+            <label for="exampleInputEmail1" class="form-label">Receipe name </label>
+            <input name="receipe_name" required type="Text" class="form-control" >
+            </div>
+            <div class="mb-3  >
+                <label for="exampleInputPassword1" class="form-label"> Receipe Descripeion </label>
+                <textarea class="from-control" name="receipe_description" required style="width: 100%; resize: vertical;" ></textarea>
+                
+            </div>
+            <div class="mb-3  >
+                <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+                <input name="receipe_image"  type="file" class="form-control" required >
+            </div>
+            <button type="submit" class="btn btn-success">Add Receipe</button>
+        </form>
+        <hr>
+        <div class ="mt-5">
+            <div class="mx-auto col-6">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"> Search </label>
+                    <input name="search"  type="Text" class="form-control" >
+                    
+                </div>
+                <button type="submit" class="btn btn-primary"> Search </button>
+            </form>
+            </div>
+            
+        </div>
+        <!-- The below code is for border in the table -->
+        <style>
+            table, th, td {
+                border: 1px solid black; /* Adds a solid black border around the table, headers, and cells */
+                border-collapse: collapse; /* Ensures borders are not doubled */
+            }
+            th, td {
+                padding: 10px; /* Adds padding inside the cells for better readability */
+            }
+        </style>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Receipe name</th>
+                <th scope="col">Receipe Description</th>
+                <th scope="col">Receipe Images</th>
+                <th scope="col">Actions</th>s
+            </tr>
+            </thead>
+            <tbody>
+                {% for receipe in receipes %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td> {{receipe.receipe_name}} </td>
+                <td> {{receipe.receipe_description}} </td>
+                <td> 
+                    <img src="/media/{{receipe.receipe_image}}" style="height:100px"> </td>
+                <td>
+                    <a href="/delete_receipe/{{receipe.id}}/" class="btn btn-danger m-2">Deleate</a>
+                    <a href="/update_receipe/{{receipe.id}}/" class="btn btn-success">Update</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+
+    {% endblock %}
